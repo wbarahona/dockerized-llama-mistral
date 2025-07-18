@@ -1,0 +1,15 @@
+# Node junk (if ever added)
+node_modules/
+*.log
+.env
+dist/
+
+# Python/OS/editor trash
+__pycache__/
+.DS_Store
+*.swp
+*.swo
+.vscode/
+
+# LLM models
+models/

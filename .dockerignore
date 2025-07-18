@@ -1,0 +1,12 @@
+# Avoid sending local junk into Docker context
+.git
+.github
+node_modules
+models
+*.log
+*.env
+*.pem
+Dockerfile
+*.zip
+dist
+coverage

@@ -1,0 +1,31 @@
+name: Deploy LLM Agent to Droplet
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛎️ Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🔐 Set up SSH key
+        run: |
+          echo "${{ secrets.SSH_KEY }}" | base64 -d > key.pem
+          chmod 600 key.pem
+
+      - name: 🚚 Copy files to droplet
+        run: |
+          rsync -avz --delete -e "ssh -i key.pem -o StrictHostKeyChecking=no" ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/opt/pawcloud-llm/
+
+      - name: 🐳 Build and run container remotely
+        run: |
+          ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            cd /opt/pawcloud-llm
+            docker build -t pawcloud-llm .
+            docker stop pawcloud-llm || true && docker rm pawcloud-llm || true
+            docker run -d --restart=always --name pawcloud-llm -p 8000:8000 pawcloud-llm
+          EOF
