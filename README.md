@@ -328,11 +328,13 @@ Returns
 ```
 
 🌐 Web UI:
-• The server also has a web interface at http://localhost:8000
+
+- The server also has a web interface at http://localhost:8000
 
 🎯 Most Useful for You:
-• /v1/chat/completions - For conversational AI
-• /v1/completions - For text completion tasks
-• /tokenize - To see how text is tokenized
-• /health - To check if server is running
-• /props - To see server configuration and settings
+
+- /v1/chat/completions - For conversational AI
+- /v1/completions - For text completion tasks
+- /tokenize - To see how text is tokenized
+- /health - To check if server is running
+- /props - To see server configuration and settings
