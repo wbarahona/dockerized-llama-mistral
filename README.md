@@ -2,17 +2,58 @@
 
 With this project you can deploy easily to your server a dockerized llama model for chatbot as you require, this is a barebones project, all training, security and quotas are yours to set
 
-## ⚒️ Build the image
+## ✨ Recent Improvements
+
+- ✅ **ARM64 (Apple Silicon) Support**: Fixed compilation issues on Apple Silicon Macs
+- 🐳 **Docker Compose Support**: Easy deployment with `docker-compose.yml`
+- 📦 **Model Persistence**: Downloaded models are saved between container restarts
+- 🛠️ **Better Error Handling**: Improved entrypoint script with proper error handling
+- 🏗️ **Optimized Build**: Uses OpenBLAS for better ARM64 performance
+
+## 🚀 Quick Start (Recommended)
+
+### Using Docker Compose
+
+```bash
+# Start the server
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop the server
+docker-compose down
+```
+
+## ⚒️ Manual Docker Build
 
 ```bash
 docker build -t llm-docker .
 ```
 
-## 🚗💨 Run the image
+## 🚗💨 Manual Docker Run
 
 ```bash
+# With model persistence
+docker run -d -p 8000:8000 -v $(pwd)/models:/app/models --name llm-server llm-docker
+
+# Simple run (models downloaded each time)
 docker run -p 8000:8000 llm-docker
 ```
+
+## 🍎 Apple Silicon (ARM64) Users
+
+This project now fully supports Apple Silicon Macs! The Dockerfile includes specific optimizations:
+
+- Uses OpenBLAS for better ARM64 performance
+- Disables problematic native CPU optimizations
+- Includes all necessary ARM64 development libraries
+
+## 📋 System Requirements
+
+- **RAM**: Minimum 8GB (16GB recommended)
+- **Storage**: ~5GB for model download
+- **Architecture**: ARM64 or x86_64 supported
 
 ## 🔗 Available Endpoints
 
